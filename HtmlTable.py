@@ -30,8 +30,16 @@ indeks_najmlodszego_albumu = df['Rok'].idxmin()
 najmlodszy_album_rok = df.loc[indeks_najmlodszego_albumu, 'Rok']
 print(f"Najmłodszy album na liście wyszedł w roku: {najmlodszy_album_rok}")
 
-najwczesniejsze_albumy = df.groupby('Artysta')['Rok'].min().reset_index()
+# najwczesniejsze_albumy = df.groupby('Artysta')['Rok'].min().reset_index()
+# print("Najwcześniej wydane albumy każdego artysty:")
+# print(najwczesniejsze_albumy)
+
+# najwczesniejsze_albumy.to_csv(r'C:\Users\leszek.stanislawski\Downloads\Kodilla\Python\Pandas\najwczesniejsze_albumy.csv', index=False)
+
+najwczesniejsze_albumy = df.groupby('Artysta', as_index=False).agg({'Rok': 'min', 'Tytuł': 'first'})
+najwczesniejsze_albumy.columns = ['Artysta', 'Najwcześniejszy album', 'Rok najwcześniejszego albumu']
+
 print("Najwcześniej wydane albumy każdego artysty:")
 print(najwczesniejsze_albumy)
 
-najwczesniejsze_albumy.to_csv("najwczesniejsze_albumy.csv", index=False)
+najwczesniejsze_albumy.to_csv(r'C:\Users\leszek.stanislawski\Downloads\Kodilla\Python\Pandas\najwczesniejsze_albumy.csv', index=False)
